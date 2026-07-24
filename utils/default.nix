@@ -1,0 +1,79 @@
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}: {
+  home.packages = with pkgs; [
+    tty-clock
+    zoxide
+    gnome-tweaks
+    networkmanagerapplet
+    wayland-logout
+    wl-clipboard
+    sd
+    socat
+    pandoc
+    dust
+    killall
+    htop
+    gparted
+    gimp3
+    inputs.nixpkgs-stable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.kdePackages.kdenlive
+    appimage-run
+    yad
+    xprop
+    jq
+    direnv
+    entr
+    lutgen
+    matugen
+    hellwal
+    imagemagick
+    ffmpeg
+    nurl
+    nix-init
+    wl-color-picker
+    loupe
+    showtime
+    gnome-disk-utility
+    upower
+    bazaar
+    podman-compose
+    scrcpy
+    cliphist
+    file-roller
+    file
+    patchelf
+    pkg-config
+    bat
+    bottom
+    choose
+    delta
+    difftastic
+    duf
+    dust
+    miller
+    procs
+    ripgrep-all
+    sqlite
+    sd
+    yq
+    xh
+    android-tools
+  ];
+
+  xdg.mimeApps.defaultApplicationPackages = with pkgs; [
+    loupe
+    file-roller
+  ];
+  imports = [
+    ./eye-candy.nix
+    ./obs.nix
+    ./music.nix
+    ./kubernetes.nix
+    ./lazygit.nix
+    ./yazi
+  ];
+  programs.pay-respects.enable = true;
+}
