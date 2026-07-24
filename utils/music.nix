@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   ...
 }:
@@ -39,7 +38,7 @@
       # 随机
       # primaryColor = "random"
       # 经典网易云音乐红
-      primaryColor = "#${config.lib.stylix.colors.base07}"
+      primaryColor = "#ec4141"
 
       # 进度条配置
       [theme.progress]
@@ -154,13 +153,7 @@
       # "ctrl+shift+space" = "toggle"
     '';
 
-  programs.cava = {
-    enable = true;
-  };
-  stylix.targets.cava = {
-    enable = true;
-    rainbow.enable = true;
-  };
+  programs.cava.enable = true;
 
   xdg.configFile."fum/config.jsonc".source = ./fum.json;
 }

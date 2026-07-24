@@ -29,7 +29,6 @@
     ./trouble.nix
     ./project.nix
   ];
-  stylix.targets.nixvim.enable = true;
   programs.nixvim = {
     enable = true;
     defaultEditor = true;

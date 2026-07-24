@@ -2,8 +2,6 @@
   pkgs,
   lib,
   inputs,
-  host,
-  user,
   ...
 }: let
   nixd = inputs.nixd.packages.${pkgs.stdenv.hostPlatform.system}.nixd;

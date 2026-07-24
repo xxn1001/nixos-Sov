@@ -1,23 +1,9 @@
-{ config, ... }:
-let
-  c = config.lib.stylix.colors;
-in
 {
   programs.nixvim.plugins.lualine = {
     enable = true;
     settings = {
       options = {
-        theme = {
-          normal = {
-            a = { bg = c.base0D; fg = c.base00; };
-            b = { bg = c.base01; fg = c.base05; };
-            c = { bg = c.base00; fg = c.base04; };
-          };
-          insert = { a = { bg = c.base0B; fg = c.base00; }; b = { bg = c.base01; fg = c.base05; }; c = { bg = c.base00; }; };
-          visual = { a = { bg = c.base0E; fg = c.base00; }; b = { bg = c.base01; fg = c.base05; }; c = { bg = c.base00; }; };
-          replace = { a = { bg = c.base08; fg = c.base00; }; b = { bg = c.base01; fg = c.base05; }; c = { bg = c.base00; }; };
-          command = { a = { bg = c.base0C; fg = c.base00; }; b = { bg = c.base01; fg = c.base05; }; c = { bg = c.base00; }; };
-        };
+        theme = "auto";
         globalstatus = true;
         disabled_filetypes.statusline = [ "dashboard" "alpha" "starter" "snacks_dashboard" ];
       };

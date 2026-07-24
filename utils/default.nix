@@ -74,6 +74,7 @@
     ./kubernetes.nix
     ./lazygit.nix
     ./yazi
+    ./libreoffice.nix
   ];
   programs.pay-respects.enable = true;
 }

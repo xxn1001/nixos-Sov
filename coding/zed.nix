@@ -38,5 +38,4 @@
       };
     };
   };
-  stylix.targets.zed.enable = true;
 }
