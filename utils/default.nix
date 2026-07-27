@@ -61,6 +61,7 @@
     yq
     xh
     android-tools
+    virt-manager
   ];
 
   xdg.mimeApps.defaultApplicationPackages = with pkgs; [

@@ -1,5 +1,6 @@
 {
   pkgs,
+  user,
   lib,
   config,
   ...
@@ -17,10 +18,24 @@
       fzf
       eza
       fd
+
+      # fonts
+      lxgw-wenkai
+      nerd-fonts.comic-shanns-mono
     ];
 
     sessionVariables = {
       NIXPKGS_ALLOW_UNFREE = "1";
+      NH_HOME_FLAKE = "/home/${user}/.config/nixos";
+    };
+  };
+
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      serif = ["LXGW WenKai" "ComicShannsMono Nerd Font Propo"];
+      sansSerif = ["LXGW WenKai" "ComicShannsMono Nerd Font Propo"];
+      monospace = ["ComicShannsMono Nerd Font Propo" "LXGW WenKai"];
     };
   };
 

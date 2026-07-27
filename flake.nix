@@ -57,11 +57,11 @@
               home.stateVersion = "26.05";
               nixpkgs.config.allowUnfree = true;
               nix.package = pkgs.nix;
-              nix.settings.experimental-features = [ "nix-command" "flakes" ];
+              nix.settings.experimental-features = ["nix-command" "flakes"];
             })
             ./home.nix
             ./browser.nix
-            ./ghostty.nix
+            ./terminal
             ./shell
             ./utils
             ./coding
