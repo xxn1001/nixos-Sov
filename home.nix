@@ -55,6 +55,11 @@
     };
   };
 
+  nix.registry.template.to = {
+    type = "path";
+    path = "${config.home.homeDirectory}/.config/nixos/templates";
+  };
+
   programs = {
     git = {
       enable = true;
