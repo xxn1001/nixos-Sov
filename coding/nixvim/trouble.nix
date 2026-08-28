@@ -1,6 +1,35 @@
 {
   programs.nixvim = {
-    plugins.trouble.enable = true;
+    plugins.trouble = {
+      enable = true;
+      lazyLoad.settings = {
+        cmd = "Trouble";
+        keys = [
+          {
+            __raw = ''
+              { "[q", function()
+                  local trouble = require("trouble")
+                  if trouble.is_open() then
+                    trouble.previous({ skip_groups = true, jump = true })
+                  else
+                    vim.cmd.cprev()
+                  end
+                end, desc = "上一个故障/快速修复项目" }'';
+          }
+          {
+            __raw = ''
+              { "]q", function()
+                  local trouble = require("trouble")
+                  if trouble.is_open() then
+                    trouble.next({ skip_groups = true, jump = true })
+                  else
+                    vim.cmd.cnext()
+                  end
+                end, desc = "下一个故障/快速修复项目" }'';
+          }
+        ];
+      };
+    };
     keymaps = [
       {
         key = "<leader>xx";
@@ -26,32 +55,6 @@
         key = "<leader>xQ";
         action = "<cmd>Trouble qflist toggle<cr>";
         options = { silent = true; desc = "切换 quickfix 列表面板 (Trouble)"; };
-      }
-      {
-        key = "[q";
-        action.__raw = ''
-          function()
-            if require("trouble").is_open() then
-              require("trouble").previous({ skip_groups = true, jump = true })
-            else
-              vim.cmd.cprev()
-            end
-          end
-        '';
-        options = { silent = true; desc = "上一个故障/快速修复项目"; };
-      }
-      {
-        key = "]q";
-        action.__raw = ''
-          function()
-            if require("trouble").is_open() then
-              require("trouble").next({ skip_groups = true, jump = true })
-            else
-              vim.cmd.cnext()
-            end
-          end
-        '';
-        options = { silent = true; desc = "下一个故障/快速修复项目"; };
       }
     ];
   };

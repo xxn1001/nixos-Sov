@@ -2,6 +2,7 @@
   programs.nixvim = {
     plugins.aerial = {
       enable = true;
+      lazyLoad.settings.cmd = "AerialToggle";
       settings = {
         attach_mode = "global";
         show_guides = true;

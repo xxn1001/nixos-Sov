@@ -28,7 +28,13 @@
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
-    performance.combinePlugins.enable = false;
+    performance = {
+      combinePlugins.enable = true;
+      byteCompileLua = {
+        enable = true;
+        plugins = true;
+      };
+    };
     globals = {
       mapleader = " ";
       maplocalleader = " ";
@@ -69,13 +75,23 @@
       sessionoptions = ["buffers" "curdir" "tabpages" "winsize" "help" "globals" "skiprtp" "folds"];
     };
     plugins = {
+      lz-n.enable = true;
       sleuth.enable = true;
       nvim-surround.enable = true;
       repeat.enable = true;
       lastplace.enable = true;
-      nvim-autopairs.enable = true;
-      endwise.enable = true;
-      markdown-preview.enable = true;
+      nvim-autopairs = {
+        enable = true;
+        lazyLoad.settings.event = "InsertEnter";
+      };
+      endwise = {
+        enable = true;
+        lazyLoad.settings.event = "InsertEnter";
+      };
+      markdown-preview = {
+        enable = true;
+        lazyLoad.settings.ft = "markdown";
+      };
       web-devicons.enable = true;
     };
     extraPlugins = with pkgs.vimPlugins; [fcitx-vim];

@@ -1,5 +1,8 @@
 {
-  programs.nixvim.plugins.noice.enable = true;
+  programs.nixvim.plugins.noice = {
+    enable = true;
+    lazyLoad.settings.event = "DeferredUIEnter";
+  };
   programs.nixvim.plugins.notify = {
     enable = true;
     settings = {

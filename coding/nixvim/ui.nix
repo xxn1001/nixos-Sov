@@ -2,6 +2,7 @@
   programs.nixvim.plugins = {
     telescope = {
       enable = true;
+      lazyLoad.settings.cmd = "Telescope";
       extensions = {
         fzf-native.enable = true;
         file-browser.enable = true;
@@ -23,6 +24,7 @@
     bufferline.enable = true;
     gitsigns = {
       enable = true;
+      lazyLoad.settings.event = "DeferredUIEnter";
       settings = {
         signs = {
           add.text = "│";
@@ -105,6 +107,15 @@
     };
     render-markdown = {
       enable = true;
+      lazyLoad.settings.ft = [ "markdown" "codecompanion" ];
+      settings = {
+        file_types = [ "markdown" "codecompanion" ];
+        latex = {
+          enabled = true;
+          converter = "latex2text";
+        };
+        win_options.conceallevel.rendered = 2;
+      };
     };
   };
   programs.nixvim.keymaps = [
@@ -149,11 +160,4 @@
       options = { silent = true; desc = "快捷键查询"; };
     }
   ];
-  programs.nixvim.extraConfigLua = ''
-    require("render-markdown").setup({
-      file_types = { "markdown", "codecompanion" },
-      latex = { enabled = true, converter = "latex2text" },
-      win_options = { conceallevel = { rendered = 2 } },
-    })
-  '';
 }

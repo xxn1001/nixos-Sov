@@ -2,6 +2,7 @@
   programs.nixvim = {
     plugins.neo-tree = {
       enable = true;
+      lazyLoad.settings.cmd = "Neotree";
       settings = {
         window = {
           width = 30;
