@@ -1,6 +1,6 @@
 {
   programs.nixvim.plugins.dashboard = {
-    enable = true;
+    enable = false;
     settings = {
       change_to_vcs_root = true;
       theme = "doom";
@@ -25,7 +25,7 @@
           ""
           ""
         ];
-        footer = [ "Life is a fucking movie. 人生如戏啊! 靓仔!" ];
+        footer = ["Life is a fucking movie. 人生如戏啊! 靓仔!"];
         center = [
           {
             icon = " ";

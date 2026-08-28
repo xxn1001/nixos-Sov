@@ -2,8 +2,7 @@
   config,
   pkgs,
   ...
-}:
-{
+}: {
   imports = [
     ./autocmd.nix
     ./keymap.nix
@@ -19,10 +18,7 @@
     ./mini.nix
     ./noice.nix
     ./neo-tree.nix
-    ./dashboard.nix
     ./todo-comments.nix
-    ./harpoon.nix
-    ./toggleterm.nix
     ./persistence.nix
     ./autotag.nix
     ./aerial.nix
@@ -61,7 +57,7 @@
       hlsearch = false;
       scrolloff = 8;
       spell = true;
-      spelllang = [ "en_us" "cjk" ];
+      spelllang = ["en_us" "cjk"];
       spellsuggest = "best,4";
       wrap = false;
       signcolumn = "yes";
@@ -70,14 +66,8 @@
       foldexpr = "v:lua.vim.ufo.foldexpr()";
       foldenable = true;
       foldlevelstart = 99;
-      sessionoptions = [ "buffers" "curdir" "tabpages" "winsize" "help" "globals" "skiprtp" "folds" ];
+      sessionoptions = ["buffers" "curdir" "tabpages" "winsize" "help" "globals" "skiprtp" "folds"];
     };
-    keymaps = [
-      { mode = "n"; key = "<Leader>ch"; action = "<cmd>lua ToggleHeader()<CR>"; }
-      { mode = "n"; key = "<Leader>gb"; action = "<cmd>!go build ./...<CR>"; }
-      { mode = "n"; key = "<Leader>gt"; action = "<cmd>!go test -v ./...<CR>"; }
-      { mode = "n"; key = "<Leader>gr"; action = "<cmd>!go run .<CR>"; }
-    ];
     plugins = {
       sleuth.enable = true;
       nvim-surround.enable = true;
@@ -88,7 +78,7 @@
       markdown-preview.enable = true;
       web-devicons.enable = true;
     };
-    extraPlugins = with pkgs.vimPlugins; [ fcitx-vim ];
+    extraPlugins = with pkgs.vimPlugins; [fcitx-vim];
     extraConfigLua = ''
       local M = {}
       function M.toggle_header()

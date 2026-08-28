@@ -5,8 +5,7 @@
   host,
   user,
   ...
-}:
-{
+}: {
   programs.nixvim.lsp.inlayHints.enable = true;
   programs.nixvim.plugins.lsp = {
     enable = true;
@@ -81,7 +80,7 @@
         enable = true;
         settings = {
           Lua = {
-            diagnostics.globals = [ "vim" ];
+            diagnostics.globals = ["vim"];
             hint.enable = false;
           };
         };
@@ -100,7 +99,11 @@
             parameterNames = true;
             rangeVariableTypes = true;
           };
-          analyses = { unusedparams = true; unreachable = true; unusedvariable = true; };
+          analyses = {
+            unusedparams = true;
+            unreachable = true;
+            unusedvariable = true;
+          };
           staticcheck = true;
         };
       };
@@ -109,14 +112,14 @@
         enable = true;
         package = inputs.nixd.packages.${pkgs.stdenv.hostPlatform.system}.nixd;
         settings = {
-          formatting.command = [ "nixfmt" ];
+          formatting.command = ["nixfmt"];
           nixd.nixpkgs.expr = "import ${inputs.nixpkgs} { }";
-          options =
-            let flake = ''(builtins.getFlake "/home/${user}/nix")'';
-            in {
-              nixos.expr = "${flake}.nixosConfigurations.${host}.options";
-              home_manager.expr = ''${flake}.homeConfigurations."${user}@${host}".options'';
-            };
+          options = let
+            flake = ''(builtins.getFlake "/home/${user}/nix")'';
+          in {
+            nixos.expr = "${flake}.nixosConfigurations.${host}.options";
+            home_manager.expr = ''${flake}.homeConfigurations."${user}@${host}".options'';
+          };
         };
       };
       html.enable = true;
@@ -127,7 +130,6 @@
         enable = true;
         packageFallback = true;
       };
-      texlab.enable = true;
       tinymist.enable = true;
       jsonls.enable = true;
       taplo.enable = true;
@@ -138,67 +140,81 @@
           yaml = {
             schemas = {
               "https://json.schemastore.org/github-workflow" = ".github/workflows/*";
-              "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json" = [ "docker-compose.{yml,yaml}" "*compose*.{yml,yaml}" ];
+              "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json" = ["docker-compose.{yml,yaml}" "*compose*.{yml,yaml}"];
             };
           };
         };
       };
-      qmlls = { enable = true; filetypes = [ "qml" ]; };
+      qmlls = {
+        enable = true;
+        filetypes = ["qml"];
+      };
       harper_ls.enable = true;
     };
   };
   programs.nixvim.keymaps = [
     {
+      mode = "n";
       key = "<leader>ci";
       action = "<cmd>Telescope lsp_implementations<cr>";
       options.desc = "查找实现";
     }
     {
+      mode = "n";
       key = "<leader>cG";
       action = "<cmd>Telescope lsp_references<cr>";
       options.desc = "查找引用";
     }
     {
+      mode = "n";
       key = "<leader>cw";
       action = "<cmd>Telescope lsp_workspace_symbols<cr>";
       options.desc = "查找工作区符号";
     }
     {
+      mode = "n";
       key = "<leader>cf";
       action = "<cmd>Telescope lsp_document_symbols<cr>";
       options.desc = "文件大纲";
     }
     {
+      mode = "n";
       key = "<leader>c[";
       action = "<cmd>Telescope lsp_incoming_calls<cr>";
       options.desc = "被调列表";
     }
     {
+      mode = "n";
       key = "<leader>c]";
       action = "<cmd>Telescope lsp_outgoing_calls<cr>";
       options.desc = "调用列表";
     }
     {
+      mode = "n";
       key = "<leader>ce";
       action = "<cmd>Telescope diagnostics bufnr=0<cr>";
       options.desc = "当前文件诊断";
     }
     {
+      mode = "n";
       key = "<leader>cW";
       action = "<cmd>Telescope diagnostics<cr>";
       options.desc = "全局诊断";
     }
     {
+      mode = "n";
       key = "<leader>cd";
       action = "<cmd>lua vim.diagnostic.open_float()<cr>";
       options.desc = "打开当前行诊断浮窗";
     }
     {
+      mode = "n";
       key = "<leader>cR";
       action = "<cmd>lua vim.lsp.buf.rename()<cr>";
       options.desc = "重命名符号";
     }
     {
+      mode = "n";
       key = "<leader>ca";
       action = "<cmd>lua vim.lsp.buf.code_action()<cr>";
       options.desc = "代码操作";
@@ -219,7 +235,7 @@
               [vim.diagnostic.severity.HINT] = "💡",
             },
           },
-          update_in_insert = true,
+          update_in_insert = false,
           underline = true,
           severity_sort = true,
           float = {
