@@ -96,10 +96,7 @@
       settings.spec = [
         { __unkeyed = "<Leader>f"; name = "Telescope"; }
         { __unkeyed = "<Leader>c"; name = "C/C++ / LSP"; }
-        { __unkeyed = "<Leader>g"; name = "Go"; }
         { __unkeyed = "<Leader>h"; name = "Git Hunk"; }
-        { __unkeyed = "<Leader>m"; name = "Harpoon"; }
-        { __unkeyed = "<Leader>t"; name = "Terminal"; }
         { __unkeyed = "<Leader>w"; name = "Window"; }
         { __unkeyed = "<Leader>x"; name = "Trouble/Diagnostics"; }
         { __unkeyed = "<Leader>s"; name = "Toggle"; }

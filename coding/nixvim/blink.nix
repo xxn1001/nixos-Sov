@@ -38,7 +38,8 @@ in {
         ":" = {
           mapping = cmapping;
           sources = [
-            {name = "buffer";}
+            {name = "path";}
+            {name = "cmdline";}
           ];
         };
       };
@@ -48,7 +49,7 @@ in {
     plugins.luasnip.enable = true;
     plugins.cmp_luasnip.enable = true;
     plugins.cmp-nvim-lsp.enable = true;
-    plugins.cmp-cmdline = true;
+    plugins.cmp-cmdline.enable = true;
     # plugins.cmp-spell.enable = true;
   };
 }

@@ -38,6 +38,8 @@
       cmake = {
         enable = true;
         packageFallback = true;
+        cmd = ["cmake-language-server"];
+        filetypes = ["cmake"];
       };
       rust_analyzer = {
         enable = true;
@@ -221,6 +223,52 @@
     }
   ];
   programs.nixvim.extraConfigLua = ''
+    vim.api.nvim_create_autocmd({ "FileType" }, {
+      desc = "LSP 兜底启动（懒加载竞态）",
+      callback = function(ev)
+        local bufnr = ev.buf
+        if not vim.api.nvim_buf_is_valid(bufnr) or vim.bo[bufnr].buftype ~= "" then
+          return
+        end
+        local ft = vim.bo[bufnr].filetype
+        if ft == "" or vim.b[bufnr].lsp_kick_done then
+          return
+        end
+        vim.b[bufnr].lsp_kick_done = true
+        local function kick(left)
+          if left <= 0 or not vim.api.nvim_buf_is_valid(bufnr) or vim.bo[bufnr].filetype ~= ft then
+            return
+          end
+          if #vim.lsp.get_clients({ bufnr = bufnr }) > 0 then
+            return
+          end
+          local pending = false
+          for name in pairs(vim.lsp._enabled_configs or {}) do
+            if #vim.lsp.get_clients({ bufnr = bufnr, name = name }) == 0 then
+              local config = vim.lsp.config[name]
+              local fts = config and config.filetypes
+              if type(fts) == "table" and #fts > 0 and vim.tbl_contains(fts, ft) then
+                local before = #vim.lsp.get_clients({ bufnr = bufnr, name = name })
+                local ok = pcall(vim.lsp.start, config, { bufnr = bufnr })
+                if ok and #vim.lsp.get_clients({ bufnr = bufnr, name = name }) > before then
+                  return
+                end
+              end
+              pending = true
+            end
+          end
+          if pending then
+            vim.defer_fn(function()
+              kick(left - 1)
+            end, 150)
+          end
+        end
+        vim.schedule(function()
+          kick(12)
+        end)
+      end,
+    })
+
     vim.api.nvim_create_autocmd('LspAttach', {
       callback = function()
         local _border = "rounded"

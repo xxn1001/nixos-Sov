@@ -58,20 +58,6 @@
         '';
       }
       {
-        desc = "禁用首页的缩进线和指南线";
-        event = "FileType";
-        pattern = [ "dashboard" "alpha" "snacks_dashboard" ];
-        once = true;
-        callback.__raw = ''
-          function()
-            vim.b.miniindentscope_disable = true
-            vim.opt_local.list = false
-            pcall(function() require("ibl").setup_buffer(0, { enabled = false }) end)
-            vim.g.indent_blankline_enabled = false
-          end
-        '';
-      }
-      {
         desc = "自定义事件CookLazy";
         event = "VimEnter";
         once = true;

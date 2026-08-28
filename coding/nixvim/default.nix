@@ -80,34 +80,6 @@
     };
     extraPlugins = with pkgs.vimPlugins; [fcitx-vim];
     extraConfigLua = ''
-      local M = {}
-      function M.toggle_header()
-        local ext = vim.fn.expand("%:e")
-        local base = vim.fn.expand("%:r")
-        local headers = { h = true, hpp = true, hxx = true, hh = true }
-        local sources = { c = true, cpp = true, cxx = true, cc = true }
-        if headers[ext] then
-          for _, s in ipairs({ "cpp", "cxx", "cc", "c" }) do
-            local f = base .. "." .. s
-            if vim.fn.filereadable(f) == 1 then
-              vim.cmd("e " .. f)
-              return
-            end
-          end
-          vim.cmd("e " .. base .. ".cpp")
-        elseif sources[ext] then
-          for _, h in ipairs({ "hpp", "hxx", "hh", "h" }) do
-            local f = base .. "." .. h
-            if vim.fn.filereadable(f) == 1 then
-              vim.cmd("e " .. f)
-              return
-            end
-          end
-          vim.cmd("e " .. base .. ".h")
-        end
-      end
-      _G.ToggleHeader = M.toggle_header
-
       function _G.ToggleDiagnostics()
         local enabled = vim.diagnostic.is_enabled()
         vim.diagnostic.enable(not enabled)

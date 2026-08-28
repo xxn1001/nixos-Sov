@@ -5,7 +5,6 @@
       options = {
         theme = "auto";
         globalstatus = true;
-        disabled_filetypes.statusline = [ "dashboard" "alpha" "starter" "snacks_dashboard" ];
       };
       sections = {
         lualine_a = [{ __unkeyed = "mode"; fmt = "string.lower"; }];
