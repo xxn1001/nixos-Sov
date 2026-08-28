@@ -29,7 +29,10 @@
     enable = true;
     defaultEditor = true;
     performance = {
-      combinePlugins.enable = true;
+      combinePlugins = {
+        enable = true;
+        standalonePlugins = [ pkgs.vimPlugins.everforest ];
+      };
       byteCompileLua = {
         enable = true;
         plugins = true;

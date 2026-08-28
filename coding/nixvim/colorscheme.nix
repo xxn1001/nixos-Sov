@@ -1,15 +1,31 @@
 {
   config.programs.nixvim = {
-    extraConfigLua = ''
-      vim.api.nvim_create_autocmd("ColorScheme", {
-        pattern = "*",
-        callback = function()
-          vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-          vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "none" })
-          vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "none" })
-          vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
-        end,
-      })
-    '';
+    colorscheme = "everforest";
+    colorschemes.everforest = {
+      enable = true;
+      settings = {
+        transparent_background = 2;
+      };
+    };
+    highlightOverride = {
+      Normal.bg = "NONE";
+      NormalFloat.bg = "NONE";
+      StatusLine.bg = "NONE";
+      StatusLineNC.bg = "NONE";
+      WinBar.bg = "NONE";
+      WinBarNC.bg = "NONE";
+      Pmenu.bg = "NONE";
+      PmenuSbar.bg = "NONE";
+      PmenuThumb.bg = "NONE";
+      FloatBorder.bg = "NONE";
+      TelescopeNormal.bg = "NONE";
+      TelescopeBorder.bg = "NONE";
+      NeoTreeNormal.bg = "NONE";
+      NeoTreeNormalNC.bg = "NONE";
+      SignColumn.bg = "NONE";
+      LineNr.bg = "NONE";
+      CursorLineNr.bg = "NONE";
+      MsgArea.bg = "NONE";
+    };
   };
 }

@@ -14,6 +14,7 @@
       shellAliases = {
         "ls" = "eza";
         "l" = "eza -lah --icons=auto";
+        "nv" = "nvim";
       };
       shellInit = ''
         zoxide init fish | source
