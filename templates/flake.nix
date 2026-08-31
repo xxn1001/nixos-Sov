@@ -1,5 +1,5 @@
 {
-  description = "C++ 开发模板：通用开发 / 数据科学 / 机器学习与深度学习";
+  description = "开发模板：C++ / CUDA 工具链 / Python 数据科学与深度学习";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -16,27 +16,11 @@
         inherit system;
         config = {
           allowUnfree = true;
-          cudaSupport = true;
         };
-        overlays = [
-          (final: prev: {
-            onnxruntime = prev.onnxruntime.override {
-              openvinoSupport = false;
-            };
-            cudaPackages = prev.cudaPackages.overrideScope (cudaFinal: cudaPrev: {
-              "cudnn-frontend" = cudaPrev."cudnn-frontend".overrideAttrs (old: {
-                preConfigure = (old.preConfigure or "") + ''
-                  cmakeFlagsArray+=("-DCUDAToolkit_NVCC_EXECUTABLE=${cudaPrev.cuda_nvcc}/bin/nvcc")
-                '';
-              });
-            });
-          })
-        ];
       };
     in {
       cpp-dev = import ./cpp-dev.nix { inherit pkgs; };
-      cpp-ds = import ./cpp-ds.nix { inherit pkgs; };
-      cpp-ml = import ./cpp-ml.nix { inherit pkgs; };
+      cuda-dev = import ./cuda-dev.nix { inherit pkgs; };
     });
   };
 }

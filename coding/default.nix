@@ -4,6 +4,7 @@
     ./lsp.nix
     ./go.nix
     ./cpp.nix
+    ./cuda.nix
     ./rust.nix
     ./nixvim
     ./vscodium

@@ -22,5 +22,9 @@ pkgs.mkShell {
     echo "  gcc:   $(gcc --version 2>/dev/null | head -1)"
     echo "  cmake: $(cmake --version 2>/dev/null | head -1)"
     echo "  gdb:   $(gdb --version 2>/dev/null | head -1)"
+    # nix develop 固定用 bashInteractive，这里直接亮出用户自己的 fish
+    if test -z "$NIX_DEVELOP_NO_FISH"; then
+      exec fish
+    fi
   '';
 }
