@@ -15,11 +15,7 @@
         "]" = "goto_next";
       };
       lspBuf = {
-        "gD" = "declaration";
-        "gd" = "definition";
         "gr" = "references";
-        "gI" = "implementation";
-        "gt" = "type_definition";
       };
     };
     servers = {
@@ -151,7 +147,10 @@
         enable = true;
         filetypes = ["qml"];
       };
-      harper_ls.enable = true;
+      harper_ls = {
+        enable = true;
+        filetypes = ["markdown" "gitcommit" "tex" "text" "typst"];
+      };
     };
   };
   programs.nixvim.keymaps = [
@@ -268,6 +267,59 @@
         end)
       end,
     })
+
+    local function dedupe_jump(method, desc)
+      return function()
+        vim.lsp.buf[method]({
+          on_list = function(olist)
+            local seen = {}
+            local items = {}
+            for _, it in ipairs(olist.items) do
+              local key = (it.filename or "") .. ":" .. (it.lnum or 0) .. ":" .. (it.col or 0)
+              if not seen[key] then
+                seen[key] = true
+                table.insert(items, it)
+              end
+            end
+            if #items == 0 then
+              vim.notify("No locations found", vim.log.levels.INFO)
+              return
+            end
+            if #items == 1 then
+              local it = items[1]
+              local b = it.bufnr or vim.fn.bufadd(it.filename)
+              vim.bo[b].buflisted = true
+              vim.cmd("normal! m'")
+              vim.api.nvim_win_set_buf(0, b)
+              vim.api.nvim_win_set_cursor(0, { it.lnum, (it.col or 1) - 1 })
+              vim.cmd("normal! zv")
+              return
+            end
+            vim.ui.select(items, {
+              prompt = "选择跳转目标",
+              format_item = function(it)
+                local f = it.filename or ""
+                return string.format("%s:%d:%d", vim.fn.fnamemodify(f, ":~:."), it.lnum or 0, it.col or 0)
+              end,
+            }, function(choice)
+              if choice then
+                local b = choice.bufnr or vim.fn.bufadd(choice.filename)
+                vim.bo[b].buflisted = true
+                vim.cmd("normal! m'")
+                vim.api.nvim_win_set_buf(0, b)
+                vim.api.nvim_win_set_cursor(0, { choice.lnum, (choice.col or 1) - 1 })
+                vim.cmd("normal! zv")
+              end
+            end)
+          end,
+        })
+      end
+    end
+
+    vim.keymap.set("n", "gd", dedupe_jump("definition", "跳转到定义"), { desc = "跳转到定义" })
+    vim.keymap.set("n", "gD", dedupe_jump("declaration", "跳转到声明"), { desc = "跳转到声明" })
+    vim.keymap.set("n", "gt", dedupe_jump("type_definition", "跳转到类型定义"), { desc = "跳转到类型定义" })
+    vim.keymap.set("n", "gI", dedupe_jump("implementation", "跳转到实现"), { desc = "跳转到实现" })
 
     vim.api.nvim_create_autocmd('LspAttach', {
       callback = function()
